@@ -36,9 +36,7 @@ sender_email    = input("Type in your email address to send from: ")
 sender_password = getpass.getpass("Type in your password: ")
 receiver_email  = input("Type in your email address to send to: ")
 
-
-
-
+failure = "DOWN"
  
 # url to the Bell router
 
@@ -52,7 +50,7 @@ options.add_argument("start-maximized")
 options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
 
 last_status = ""
-minutes = 1
+minutes = 15
 
 while(True):
 
@@ -83,9 +81,9 @@ while(True):
 
     pattern = r'status="(\w*)"'
 
-    internet = "DOWN"
-    tv       = "DOWN"
-    phone    = "DOWN"
+    internet = failure
+    tv       = failure
+    phone    = failure
 
     # find out the status of each service
     status = re.search(pattern, str(data_internet))
@@ -105,7 +103,7 @@ while(True):
 
     status = [internet, tv, phone]
 
-    if "NOTSUBSCRIBED" in status:
+    if failure in status:
         if last_status != status:
             print("Sending Email!")
             
